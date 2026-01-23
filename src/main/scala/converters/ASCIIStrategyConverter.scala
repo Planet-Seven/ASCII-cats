@@ -3,7 +3,7 @@ package converters
 import conversionTables.BourkeConversionTable
 import models.images.{ASCIIImage, GrayscaleImage, RasterImage}
 
-class SingleStrategyConverter(conversionTable: ConversionTable = BourkeConversionTable(), strategy: ConversionStrategy)
+class ASCIIStrategyConverter(conversionTable: ConversionTable = BourkeConversionTable(), strategy: ConversionStrategy)
 extends ASCIIConverter {
   def convert(image: GrayscaleImage): ASCIIImage = {
     image.pixelTransform(strategy.convert(conversionTable))

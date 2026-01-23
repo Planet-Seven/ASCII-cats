@@ -1,0 +1,5 @@
+package converters
+
+trait GrayscaleConvertor {
+
+}
