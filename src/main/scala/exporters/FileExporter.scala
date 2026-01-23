@@ -1,6 +1,6 @@
 package exporters
 
-import models.{Exporter, RasterImage}
+import models.images.RasterImage
 import utils.FilePath
 
 import java.io.{File, IOException, PrintWriter}

@@ -1,6 +1,7 @@
-package images
+package models.images
 
-import models.RasterImage
+import models.images.RasterImage
+import models.pixels.Pixel
 
 import scala.reflect.ClassTag
 
@@ -13,7 +14,7 @@ class ArrayImage[T: ClassTag](width: Int, height: Int) extends RasterImage[T](wi
     if (x > width || y > height || x < 0 || y < 0)
       throw RuntimeException("out of bounds")
   }
-  
+
   override def getValue(x: Int, y: Int): T = {
     checkBounds(x, y)
     pixels(x)(y);
@@ -23,14 +24,14 @@ class ArrayImage[T: ClassTag](width: Int, height: Int) extends RasterImage[T](wi
     pixels(x)(y) = value;
   }
 
-  override def pixelTransform[S: ClassTag]( transformFunction: T => S): RasterImage[S] = {
-    val transformedImage = new ArrayImage[S](width, height)
+  override def pixelTransform( transformFunction: T => T): RasterImage[T] = {
+    val transformedImage = new ArrayImage[T](width, height)
 
     for (x <- 0 until width) {
       for (y <- 0 until height) {
-        val newValue: S = transformFunction(getValue(x, y))
+        val newValue: T = transformFunction(getValue(x, y))
         transformedImage.setValue(x, y, newValue)
-    }}
+      }}
     transformedImage
   }
 }

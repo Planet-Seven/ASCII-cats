@@ -1,7 +1,6 @@
 package filters
 
-import models.{Filter, RasterImage}
-import images.ArrayImage
+import models.images.{ArrayImage, RasterImage}
 
 import scala.reflect.ClassTag
 

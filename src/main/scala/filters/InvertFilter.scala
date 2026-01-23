@@ -1,6 +1,6 @@
 package filters
 
-import models.{Filter, RasterImage}
+import models.images.RasterImage
 
 class InvertFilter extends Filter[Double]{
   override def apply(image: RasterImage[Double]): RasterImage[Double] = {

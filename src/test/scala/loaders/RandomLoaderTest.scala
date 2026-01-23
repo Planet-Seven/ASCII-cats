@@ -1,6 +1,6 @@
 package loaders
 
-import models.RasterImage
+import models.images.RasterImage
 import org.scalatest.funsuite.AnyFunSuite
 
 import java.awt.Color

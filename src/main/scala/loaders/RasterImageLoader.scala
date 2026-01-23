@@ -1,7 +1,6 @@
 package loaders
 
-import images.ArrayImage
-import models.{ImageLoader, RasterImage}
+import models.images.{ArrayImage, RGBImage, RasterImage}
 
 import java.awt.image.BufferedImage
 import java.awt.Color
@@ -26,11 +25,11 @@ abstract class RasterImageLoader extends ImageLoader{
       case Some(bufferedImage) =>
         val width = bufferedImage.getWidth
         val height = bufferedImage.getHeight
-        val arrayImage: RasterImage[Color] = ArrayImage[Color](width, height / verticalScaleFactor)
+        val image = RGBImage(width, height / verticalScaleFactor)
 
         for (x <- 0 until width)
           for (y <- 0 until height / verticalScaleFactor)
-            arrayImage.setValue(x, y, Color(bufferedImage.getRGB(x, y * verticalScaleFactor)))
+            RGBImage.setValue(x, y, bufferedImage.getRGB(x, y * verticalScaleFactor)))
 
         Option(arrayImage)
   }

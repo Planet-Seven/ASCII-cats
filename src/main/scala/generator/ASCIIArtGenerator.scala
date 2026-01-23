@@ -1,7 +1,7 @@
 package generator
 
-import images.ArrayImage
 import models.*
+import models.images.{ArrayImage, RasterImage}
 
 import java.awt.Color
 

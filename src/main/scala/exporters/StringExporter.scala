@@ -1,6 +1,6 @@
 package exporters
 
-import models.{Exporter, RasterImage}
+import models.images.RasterImage
 
 class StringExporter extends Exporter {
   override def exportImage(image: RasterImage[Char]): String = {

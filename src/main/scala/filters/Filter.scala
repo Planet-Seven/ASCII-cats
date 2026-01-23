@@ -1,4 +1,6 @@
-package models
+package filters
+
+import models.images.RasterImage
 
 trait Filter[T] {
   // applies the filter on an image and returns the filtered image

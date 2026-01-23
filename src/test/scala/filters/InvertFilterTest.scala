@@ -1,8 +1,7 @@
 package filters
 
-import images.ArrayImage
-import models.RasterImage
 import filters.InvertFilter
+import models.images.{ArrayImage, RasterImage}
 import org.scalatest.funsuite.AnyFunSuite
 
 class InvertFilterTest extends AnyFunSuite{

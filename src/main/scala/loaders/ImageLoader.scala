@@ -1,6 +1,7 @@
-package models
+package loaders
 
-import images.ArrayImage
+import models.images.{ArrayImage, RasterImage}
+
 import java.awt.Color
 
 trait ImageLoader {

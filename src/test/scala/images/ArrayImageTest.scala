@@ -1,8 +1,7 @@
 package images
 
 import org.scalatest.funsuite.AnyFunSuite
-import images.ArrayImage
-import models.RasterImage
+import models.images.{ArrayImage, RasterImage}
 
 class ArrayImageTest extends AnyFunSuite{
   test("getPixel, setPixel, pixelTransform") {

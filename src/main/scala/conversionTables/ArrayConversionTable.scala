@@ -1,7 +1,7 @@
 package conversionTables
 
+import converters.ConversionTable
 import utils.MathUtils.clamp
-import models.ConversionTable
 
 class ArrayConversionTable(val table: Array[Char]) extends ConversionTable{
   override def getChar(_i: Int): Char = {

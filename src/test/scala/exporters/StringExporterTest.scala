@@ -1,6 +1,6 @@
 package exporters
 
-import images.ArrayImage
+import models.images.ArrayImage
 import org.scalatest.funsuite.AnyFunSuite
 
 class StringExporterTest extends AnyFunSuite {

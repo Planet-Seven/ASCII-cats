@@ -1,8 +1,7 @@
 package filters
 
-import images.ArrayImage
-import models.RasterImage
 import filters.BrightnessFilter
+import models.images.{ArrayImage, RasterImage}
 import org.scalatest.funsuite.AnyFunSuite
 
 class BrightnessFilterTest extends AnyFunSuite{

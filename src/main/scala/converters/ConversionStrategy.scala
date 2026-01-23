@@ -1,4 +1,4 @@
-package models
+package converters
 
 // The strategy contains the logic used for the conversion according to the provided table
 trait ConversionStrategy {

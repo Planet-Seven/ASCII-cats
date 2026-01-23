@@ -1,8 +1,7 @@
 package converters
 
 import conversionTables.ArrayConversionTable
-import images.ArrayImage
-import models.RasterImage
+import models.images.{ArrayImage, RasterImage}
 import org.scalatest.funsuite.AnyFunSuite
 
 class SingleStrategyConvertorTest extends AnyFunSuite{

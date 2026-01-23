@@ -1,7 +1,6 @@
 package converters
 
 import Math.pow
-import models.{ConversionStrategy, ConversionTable}
 
 class QuadraticConversionStrategy extends ConversionStrategy {
   override def convert(conversionTable: ConversionTable)(value: Double): Char = {
