@@ -1,7 +1,7 @@
 package models.images
 import models.pixels.RGBPixel
 
-class RGBImage(width: Int, height: Int) extends RasterImage(width, height){
+class RGBImage(width: Int, height: Int) extends RasterImage[RGBPixel](width, height){
   private var image: RasterImage[RGBPixel] = ArrayImage[RGBPixel](width, height)
 
   override def size: (Int, Int) = image.size

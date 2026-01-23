@@ -1,6 +1,6 @@
 package exporters
 
-import models.images.RasterImage
+import models.images.ASCIIImage
 import utils.FilePath
 
 import java.io.{File, IOException, PrintWriter}
@@ -8,7 +8,7 @@ import java.io.{File, IOException, PrintWriter}
 class FileExporter(_path: String) extends Exporter {
   private val path: FilePath = FilePath(_path)
 
-  override def exportImage(image: RasterImage[Char]): Unit = {
+  override def exportImage(image: ASCIIImage): Unit = {
     try {
       val writer = PrintWriter(File(path.getPath))
       writer.write(StringExporter().exportImage(image))

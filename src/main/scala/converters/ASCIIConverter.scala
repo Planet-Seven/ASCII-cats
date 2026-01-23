@@ -1,8 +1,8 @@
 package converters
 
-import models.images.RasterImage
+import models.images.{ASCIIImage, GrayscaleImage, RasterImage}
 
 trait ASCIIConverter {
   // Used for conversion of the grayscale image to the ascii art image
-  def convert(grayscaleImage: RasterImage[Double]): RasterImage[Char]
+  def convert(image: GrayscaleImage): ASCIIImage
 }

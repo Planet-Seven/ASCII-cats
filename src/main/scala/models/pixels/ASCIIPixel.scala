@@ -1,3 +1,3 @@
 package models.pixels
 
-class ASCIIPixel(value: Char) extends Pixel {}
+class ASCIIPixel(var value: Char) extends Pixel {}

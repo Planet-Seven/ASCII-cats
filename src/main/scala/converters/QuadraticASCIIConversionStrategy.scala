@@ -2,7 +2,7 @@ package converters
 
 import Math.pow
 
-class QuadraticConversionStrategy extends ConversionStrategy {
+class QuadraticASCIIConversionStrategy extends ConversionStrategy {
   override def convert(conversionTable: ConversionTable)(value: Double): Char = {
     if (value > 1 || value < 0)
       throw RuntimeException("Out of bounds")

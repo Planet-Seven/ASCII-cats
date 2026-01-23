@@ -1,11 +1,11 @@
 package converters
 
-import converters.QuadraticConversionStrategy
+import converters.QuadraticASCIIConversionStrategy
 import org.scalatest.funsuite.AnyFunSuite
 import conversionTables.ArrayConversionTable
 
 class QuadraticConversionStrategyTest extends AnyFunSuite{
-  private val strategy = QuadraticConversionStrategy()
+  private val strategy = QuadraticASCIIConversionStrategy()
 
   test("Min and max values"){
     assert(strategy.convert(ArrayConversionTable(Array('.','X')))(0.0) == '.')

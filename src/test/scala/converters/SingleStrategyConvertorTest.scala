@@ -13,7 +13,7 @@ class SingleStrategyConvertorTest extends AnyFunSuite{
     image.setValue(1, 0, 0.51)
     image.setValue(1, 1, 1.0)
 
-    val converter: SingleStrategyConverter = SingleStrategyConverter(conversionTable = ArrayConversionTable(Array('.','X')), strategy = LinearConversionStrategy())
+    val converter: ASCIIStrategyConverter = ASCIIStrategyConverter(conversionTable = ArrayConversionTable(Array('.','X')), strategy = LinearASCIIConversionStrategy())
 
     // Act
     val asciiImage: RasterImage[Char] = converter.convert(image)

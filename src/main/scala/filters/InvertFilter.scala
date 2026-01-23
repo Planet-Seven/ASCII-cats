@@ -1,9 +1,10 @@
 package filters
 
-import models.images.RasterImage
+import models.images.GrayscaleImage
+import models.pixels.GrayscalePixel
 
-class InvertFilter extends Filter[Double]{
-  override def apply(image: RasterImage[Double]): RasterImage[Double] = {
-    image.pixelTransform( ( pixelValue: Double ) => 1 - pixelValue )
+class InvertFilter extends Filter{
+  override def apply(image: GrayscaleImage): GrayscaleImage = {
+    image.pixelTransform( pixel => GrayscalePixel(1 - pixel.value))
   }
 }

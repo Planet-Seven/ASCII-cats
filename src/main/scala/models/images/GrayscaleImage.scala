@@ -1,7 +1,7 @@
 package models.images
 import models.pixels.GrayscalePixel
 
-class GrayscaleImage(width: Int, height: Int) extends RasterImage(width, height){
+class GrayscaleImage(width: Int, height: Int) extends RasterImage[GrayscalePixel](width, height){
   private var image: RasterImage[GrayscalePixel] = ArrayImage[GrayscalePixel](width, height)
 
   override def size: (Int, Int) = image.size

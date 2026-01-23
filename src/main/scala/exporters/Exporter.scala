@@ -1,7 +1,7 @@
 package exporters
 
-import models.images.RasterImage
+import models.images.{ASCIIImage, RasterImage}
 
 trait Exporter {
-  def exportImage(image: RasterImage[Char]): Any
+  def exportImage(image: ASCIIImage): Any
 }

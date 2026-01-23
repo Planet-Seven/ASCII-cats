@@ -1,18 +1,17 @@
 package filters
 
-import models.images.{ArrayImage, RasterImage}
+import models.images.{ArrayImage, GrayscaleImage, RasterImage}
 
 import scala.reflect.ClassTag
 
-class FlipFilter(flipX: Boolean) extends Filter[Double]{
-  override def apply(image: RasterImage[Double]): RasterImage[Double] = {
-    val transformedImage: RasterImage[Double] = ArrayImage[Double](image.size._1, image.size._2)
+class FlipFilter(flipX: Boolean) extends Filter{
+  override def apply(image: GrayscaleImage): GrayscaleImage = {
+    val transformedImage: GrayscaleImage = GrayscaleImage(image.size._1, image.size._2)
     for (x <- 0 until image.size._1)
       for (y <- 0 until image.size._2) {
-        if (flipX) transformedImage.setValue (image.size._1 - x - 1, y, image.getValue(x, y))
-        else transformedImage.setValue (x, image.size._2 - y - 1, image.getValue(x, y))
+        if (flipX) transformedImage.setPixel (image.size._1 - x - 1, y, image.getPixel(x, y))
+        else transformedImage.setPixel (x, image.size._2 - y - 1, image.getPixel(x, y))
       }
-
     transformedImage
   }
 }

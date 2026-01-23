@@ -1,6 +1,6 @@
 package converters
 
-class LinearConversionStrategy extends ConversionStrategy {
+class LinearASCIIConversionStrategy extends ConversionStrategy {
   override def convert(conversionTable: ConversionTable)(value: Double): Char = {
     if (value > 1 || value < 0)
       throw RuntimeException("Out of bounds")

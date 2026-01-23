@@ -1,7 +1,8 @@
 package generator
 
+import converters.GrayscaleConvertor
 import models.*
-import models.images.{ArrayImage, RasterImage}
+import models.images.{ASCIIImage, ArrayImage, GrayscaleImage, RGBImage}
 
 import java.awt.Color
 
@@ -9,18 +10,16 @@ class ASCIIArtGenerator {
   def execute(args: GeneratorArguments): Unit = {
 
     // load
-    val rgbImage: RasterImage[Color] = args.imageLoader.loadImage().getOrElse(ArrayImage[Color](100,100))
+    val rgbImage: RGBImage = args.imageLoader.loadImage()
 
     //convert to greyscale
-    val grayscaleImage: RasterImage[Double] = rgbImage.pixelTransform(
-      (pixel: Color) => 0.3 * pixel.getRed/255.0 + 0.59 * pixel.getGreen/255.0 + 0.11 * pixel.getBlue/255.0 )
-
+    val grayscaleImage: GrayscaleImage = GrayscaleConvertor().convert(rgbImage)
     //apply filters
-    val filteredImage: RasterImage[Double] =
+    val filteredImage: GrayscaleImage =
       args.filters.foldLeft(grayscaleImage)( (acc, filter) => filter(acc) )
-      
+
     //convert to ASCII
-    val asciiImage: RasterImage[Char]= args.converter.convert(filteredImage)
+    val asciiImage: ASCIIImage = args.ascii_converter.convert(filteredImage)
 
     //export
     args.exporters.foreach((exporter) => exporter.exportImage(asciiImage) )

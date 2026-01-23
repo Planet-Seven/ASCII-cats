@@ -1,3 +1,3 @@
 package models.pixels
 
-class RGBPixel(r: Double, g: Double, b: Double) extends Pixel {}
+class RGBPixel(var r: Double, var g: Double, var b: Double) extends Pixel {}

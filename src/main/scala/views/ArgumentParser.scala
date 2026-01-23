@@ -1,7 +1,7 @@
 package views
 
 import conversionTables.{BourkeConversionTable, LongBourkeConversionTable, ArrayConversionTable}
-import converters.{LinearConversionStrategy, QuadraticConversionStrategy, SingleStrategyConverter}
+import converters.{LinearASCIIConversionStrategy, QuadraticASCIIConversionStrategy, ASCIIStrategyConverter}
 import exporters.{ConsoleExporter, FileExporter}
 import filters.{BrightnessFilter, FlipFilter, InvertFilter}
 import generator.GeneratorArguments
@@ -32,7 +32,7 @@ class ArgumentParser {
     val generatorArguments = GeneratorArguments(
       _imageLoader = CatAPILoader(),
       _filters = Seq(),
-      _converter = SingleStrategyConverter(strategy = LinearConversionStrategy()),
+      _ascii_converter = ASCIIStrategyConverter(strategy = LinearASCIIConversionStrategy()),
       _exporters = Seq()
     )
 
@@ -40,11 +40,11 @@ class ArgumentParser {
       arg.name match {
         case "--table" =>
           arg.getParameter match
-            case "linearBourke" => generatorArguments.converter = SingleStrategyConverter(strategy=LinearConversionStrategy())
-            case "longLinearBourke" => generatorArguments.converter = SingleStrategyConverter(conversionTable=LongBourkeConversionTable(), strategy=LinearConversionStrategy())
-            case "quadraticBourke" => generatorArguments.converter = SingleStrategyConverter(strategy=QuadraticConversionStrategy())
+            case "linearBourke" => generatorArguments.ascii_converter = ASCIIStrategyConverter(strategy=LinearASCIIConversionStrategy())
+            case "longLinearBourke" => generatorArguments.ascii_converter = ASCIIStrategyConverter(conversionTable=LongBourkeConversionTable(), strategy=LinearASCIIConversionStrategy())
+            case "quadraticBourke" => generatorArguments.ascii_converter = ASCIIStrategyConverter(strategy=QuadraticASCIIConversionStrategy())
         case "--custom-table" =>
-          generatorArguments.converter = SingleStrategyConverter(ArrayConversionTable(arg.getParameter.toArray), LinearConversionStrategy())
+          generatorArguments.ascii_converter = ASCIIStrategyConverter(ArrayConversionTable(arg.getParameter.toArray), LinearASCIIConversionStrategy())
         case "--invert" =>
           generatorArguments.filters = generatorArguments.filters :+ InvertFilter()
         case "--flip" =>

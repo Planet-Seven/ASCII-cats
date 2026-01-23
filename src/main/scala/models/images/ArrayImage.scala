@@ -15,11 +15,11 @@ class ArrayImage[T: ClassTag](width: Int, height: Int) extends RasterImage[T](wi
       throw RuntimeException("out of bounds")
   }
 
-  override def getValue(x: Int, y: Int): T = {
+  override def getPixel(x: Int, y: Int): T = {
     checkBounds(x, y)
     pixels(x)(y);
   }
-  override def setValue(x: Int, y: Int, value: T): Unit = {
+  override def setPixel(x: Int, y: Int, value: T): Unit = {
     checkBounds(x, y)
     pixels(x)(y) = value;
   }
@@ -29,8 +29,8 @@ class ArrayImage[T: ClassTag](width: Int, height: Int) extends RasterImage[T](wi
 
     for (x <- 0 until width) {
       for (y <- 0 until height) {
-        val newValue: T = transformFunction(getValue(x, y))
-        transformedImage.setValue(x, y, newValue)
+        val newValue: T = transformFunction(getPixel(x, y))
+        transformedImage.setPixel(x, y, newValue)
       }}
     transformedImage
   }

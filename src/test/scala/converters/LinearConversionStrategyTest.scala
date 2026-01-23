@@ -2,11 +2,11 @@ package converters
 
 import org.scalatest.funsuite.AnyFunSuite
 
-import converters.LinearConversionStrategy
+import converters.LinearASCIIConversionStrategy
 import conversionTables.ArrayConversionTable
 
 class LinearConversionStrategyTest extends AnyFunSuite {
-  private val strategy = LinearConversionStrategy()
+  private val strategy = LinearASCIIConversionStrategy()
 
   test("Min and max values"){
     assert(strategy.convert(ArrayConversionTable(Array('.','X')))(0.0) == '.')

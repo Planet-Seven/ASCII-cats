@@ -1,7 +1,7 @@
 package models.images
 import models.pixels.ASCIIPixel
 
-class ASCIIImage(width: Int, height: Int) extends RasterImage(width, height){
+class ASCIIImage(width: Int, height: Int) extends RasterImage[ASCIIPixel](width, height){
   private var image: RasterImage[ASCIIPixel] = ArrayImage[ASCIIPixel](width, height)
 
   override def size: (Int, Int) = image.size
