@@ -3,5 +3,5 @@ package exporters
 import models.images.{ASCIIImage, RasterImage}
 
 trait Exporter {
-  def exportImage(image: ASCIIImage): Any
+  def exportImage(image: ASCIIImage): Unit
 }

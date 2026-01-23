@@ -11,7 +11,7 @@ class FileExporter(_path: String) extends Exporter {
   override def exportImage(image: ASCIIImage): Unit = {
     try {
       val writer = PrintWriter(File(path.getPath))
-      writer.write(StringExporter().exportImage(image))
+      writer.write(StringConverter().convert(image))
       writer.close()
     }
     catch {

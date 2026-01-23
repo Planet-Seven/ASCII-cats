@@ -2,8 +2,8 @@ package exporters
 
 import models.images.{ASCIIImage, RasterImage}
 
-class StringExporter extends Exporter {
-  override def exportImage(image: ASCIIImage): String = {
+class StringConverter{
+  def convert(image: ASCIIImage): String = {
     var res: String = ""
     for (y <- 0 until image.size._2)
       for (x <- 0 until image.size._1) {
