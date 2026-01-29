@@ -1,17 +1,18 @@
-package views
+package views.parser
 
-import conversionTables.{BourkeConversionTable, LongBourkeConversionTable, ArrayConversionTable}
-import converters.{LinearASCIIConversionStrategy, QuadraticASCIIConversionStrategy, ASCIIStrategyConverter}
+import conversionTables.{ArrayConversionTable, BourkeConversionTable, LongBourkeConversionTable}
+import converters.{ASCIIStrategyConverter, LinearASCIIConversionStrategy, QuadraticASCIIConversionStrategy}
 import exporters.{ConsoleExporter, FileExporter}
 import filters.{BrightnessFilter, FlipFilter, InvertFilter}
 import generator.GeneratorArguments
 import loaders.CatAPILoader
+import views.parser.Argument
 
 // This is not oop and not extendable. Ideally, it should be implemented using
 // the chain of responsibility patter. However, I've got a thesis to write,
 // so I'm keeping this abomination for now.
 
-class ArgumentParser {
+class ArgumentParser_ {
   def parse(_args: Seq[String]): GeneratorArguments = {
     var pairedArgs: List[Argument] = List()
     var args = _args

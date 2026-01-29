@@ -1,10 +1,11 @@
 package views
 
 import generator.{ASCIIArtGenerator, GeneratorArguments}
+import views.parser.ArgumentParser_
 
 class ConsoleView(app: ASCIIArtGenerator, args: Seq[String]) extends View{
   def render(): Unit = {
-    val argumentParser = ArgumentParser()
+    val argumentParser = ArgumentParser_()
 
     var parsedArguments: Option[GeneratorArguments] = None
 

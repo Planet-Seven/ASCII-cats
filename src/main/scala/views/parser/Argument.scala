@@ -1,4 +1,4 @@
-package views
+package views.parser
 
 class Argument (val name: String){
   private var parameter: String = ""
