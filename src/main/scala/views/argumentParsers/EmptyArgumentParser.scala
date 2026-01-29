@@ -1,4 +1,4 @@
-package views.parser
+package views.argumentParsers
 import generator.GeneratorArguments
 
 import java.security.InvalidParameterException
@@ -6,8 +6,8 @@ import java.security.InvalidParameterException
 class EmptyArgumentParser extends ArgumentParser {
   override def parse(arguments: List[Argument], generatorArguments: GeneratorArguments): GeneratorArguments = {
     if (arguments.nonEmpty) {
-      throw InvalidParameterException("unknown arguments:\n" + arguments.iterator.foldLeft(
-        (acc: String, a: Argument) => "  " + acc + a.name + " \n"))
+      throw InvalidParameterException("Unknown arguments:\n" + arguments.foldLeft("")(
+        (acc: String, a: Argument) => acc + a.name + " \n"))
     }
     generatorArguments
   }

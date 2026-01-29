@@ -1,4 +1,4 @@
-package views.parser
+package views.argumentParsers
 
 import generator.GeneratorArguments
 

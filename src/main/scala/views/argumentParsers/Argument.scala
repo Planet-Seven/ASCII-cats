@@ -1,4 +1,4 @@
-package views.parser
+package views.argumentParsers
 
 class Argument (val name: String){
   private var parameter: String = ""
