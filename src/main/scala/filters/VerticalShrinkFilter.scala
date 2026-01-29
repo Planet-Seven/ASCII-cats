@@ -1,5 +1,6 @@
 package filters
 import models.images.GrayscaleImage
+import models.pixels.GrayscalePixel
 
 class VerticalShrinkFilter(shrinkRatio: Double) extends Filter {
   require(shrinkRatio > 1)
@@ -15,7 +16,7 @@ class VerticalShrinkFilter(shrinkRatio: Double) extends Filter {
       var resized_y = 0
       for (y <- 0 until image.size._2) {
         if (y % dropIndex != 0) {
-          transformedImage.setPixel(x, resized_y, image.getPixel(x, y))
+          transformedImage.setPixel(x, resized_y, GrayscalePixel(image.getPixel(x, y).value))
           resized_y += 1
         }
       }
