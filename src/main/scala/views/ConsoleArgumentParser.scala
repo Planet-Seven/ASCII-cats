@@ -11,6 +11,7 @@ import java.security.InvalidParameterException
 class ConsoleArgumentParser {
   private val parsers: NonEmptyArgumentParser = CustomTableArgumentParser()
     parsers
+      .setNext(WidthArgumentParser())
       .setNext(InvertArgumentParser())
       .setNext(FlipArgumentParser())
       .setNext(BrightnessArgumentParser())

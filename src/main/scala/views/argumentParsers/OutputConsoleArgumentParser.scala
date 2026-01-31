@@ -3,6 +3,8 @@ package views.argumentParsers
 import generator.GeneratorArguments
 import exporters.ConsoleExporter
 
+import java.security.InvalidParameterException
+
 class OutputConsoleArgumentParser extends NonEmptyArgumentParser {
   usage = "[--output-console]\n"
 
@@ -11,6 +13,7 @@ class OutputConsoleArgumentParser extends NonEmptyArgumentParser {
       return next.parse(arguments, generatorArguments))
 
     generatorArguments.exporters = generatorArguments.exporters :+ ConsoleExporter()
+
     next.parse(arguments.filter((arg: Argument) => arg.name != "--output-console"), generatorArguments)
   }
 }

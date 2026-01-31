@@ -3,6 +3,8 @@ package views.argumentParsers
 import generator.GeneratorArguments
 import filters.FlipFilter
 
+import java.security.InvalidParameterException
+
 class FlipArgumentParser extends NonEmptyArgumentParser {
   usage = "[--flip]\n"
 
@@ -13,7 +15,7 @@ class FlipArgumentParser extends NonEmptyArgumentParser {
     tableArg.getParameter match
       case "x" => generatorArguments.filters = generatorArguments.filters :+ FlipFilter(flipX = true)
       case "y" => generatorArguments.filters = generatorArguments.filters :+ FlipFilter(flipX = false)
-      case _ => throw RuntimeException("Invalid flip axis.")
+      case _ => throw InvalidParameterException("Invalid flip axis.")
 
     next.parse(arguments.filter((arg: Argument) => arg.name != "--flip"), generatorArguments)
   }

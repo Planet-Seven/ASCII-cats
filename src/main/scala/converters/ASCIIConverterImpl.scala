@@ -9,7 +9,6 @@ class ASCIIConverterImpl(conversionTable: ConversionTable = BourkeConversionTabl
     val converted_image = ASCIIImage(image.size._1, image.size._2)
     for (x <- 0 until image.size._1)
       for (y <- 0 until image.size._2) {
-        print(x, y)
         val grayscale_pixel = image.getPixel(x, y)
         require(grayscale_pixel.value <= 1 || grayscale_pixel.value >= 0)
         val ascii_pixel = ASCIIPixel(
