@@ -9,7 +9,7 @@ class BrightnessFilterTest extends AnyFunSuite{
   // Success
  test("Adding positive brightness") {
    //Arrange
-   var image: GrayscaleImage = GrayscaleImage(width = 2, height = 2)
+   var image: GrayscaleImage = GrayscaleImage(width = 2, height = 1)
    val filter: BrightnessFilter = BrightnessFilter(brightnessAddend = 0.3)
    image.setPixel(0, 0, GrayscalePixel(0.5))
    image.setPixel(1, 0, GrayscalePixel(0.2))

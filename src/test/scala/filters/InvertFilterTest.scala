@@ -8,7 +8,7 @@ import org.scalatest.funsuite.AnyFunSuite
 class InvertFilterTest extends AnyFunSuite{
   test("invert"){
     //Arrange
-    var image: GrayscaleImage = GrayscaleImage(width = 2, height = 2)
+    var image: GrayscaleImage = GrayscaleImage(width = 2, height = 1)
     val filter: InvertFilter = InvertFilter()
     image.setPixel(0, 0, GrayscalePixel(0.25))
     image.setPixel(1, 0, GrayscalePixel(0.0))
