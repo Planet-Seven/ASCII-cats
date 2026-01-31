@@ -1,4 +1,4 @@
-package views.argumentParsers
+package views.console.argumentParsers
 
 import exporters.FileExporter
 import generator.GeneratorArguments

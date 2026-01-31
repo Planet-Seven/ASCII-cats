@@ -7,6 +7,7 @@ scalaVersion := "3.4.2"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
 libraryDependencies += "org.scalatestplus" %% "mockito-5-12" % "3.2.19.0" % "test"
 libraryDependencies += "org.scalacheck" %% "scalacheck" % "1.19.0" % "test"
+libraryDependencies += "com.lihaoyi" %% "cask" % "0.10.2"
 
 wartremoverWarnings ++= Seq(
   Wart.AsInstanceOf,

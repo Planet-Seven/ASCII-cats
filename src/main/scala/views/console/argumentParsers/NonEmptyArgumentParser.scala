@@ -1,4 +1,4 @@
-package views.argumentParsers
+package views.console.argumentParsers
 
 abstract class NonEmptyArgumentParser extends ArgumentParser {
   protected var next: ArgumentParser = EmptyArgumentParser()

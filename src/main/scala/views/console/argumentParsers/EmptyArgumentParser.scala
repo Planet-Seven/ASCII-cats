@@ -1,4 +1,5 @@
-package views.argumentParsers
+package views.console.argumentParsers
+
 import generator.GeneratorArguments
 
 import java.security.InvalidParameterException

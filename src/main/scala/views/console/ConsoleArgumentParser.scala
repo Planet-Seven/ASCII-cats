@@ -1,10 +1,9 @@
-package views
+package views.console
 
 import converters.ASCIIConverterImpl
 import generator.GeneratorArguments
 import loaders.CatAPILoader
-import views.argumentParsers.Argument
-import argumentParsers.*
+import views.console.argumentParsers.*
 
 import java.security.InvalidParameterException
 

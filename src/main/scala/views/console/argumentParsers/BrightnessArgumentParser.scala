@@ -1,4 +1,4 @@
-package views.argumentParsers
+package views.console.argumentParsers
 
 import filters.BrightnessFilter
 import generator.GeneratorArguments
