@@ -1,21 +1,22 @@
 package filters
 
 import filters.InvertFilter
-import models.images.{ArrayImage, RasterImage}
+import models.images.GrayscaleImage
+import models.pixels.GrayscalePixel
 import org.scalatest.funsuite.AnyFunSuite
 
 class InvertFilterTest extends AnyFunSuite{
   test("invert"){
     //Arrange
-    var image: RasterImage[Double] = ArrayImage[Double](width = 2, height = 1)
+    var image: GrayscaleImage = GrayscaleImage(width = 2, height = 2)
     val filter: InvertFilter = InvertFilter()
-    image.setValue(0, 0, 0.25)
-    image.setValue(1, 0, 0.0)
+    image.setPixel(0, 0, GrayscalePixel(0.25))
+    image.setPixel(1, 0, GrayscalePixel(0.0))
 
     //Act
     image = filter(image)
 
     //Assert
-    assert(image.getValue(0, 0) == 0.75 && image.getValue(1, 0) == 1.0)
+    assert(image.getPixel(0, 0).value == 0.75 && image.getPixel(1, 0).value == 1.0)
   }
 }
