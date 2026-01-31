@@ -5,14 +5,13 @@ import models.images.{ASCIIImage, RasterImage}
 class StringConverter{
   def convert(image: ASCIIImage): String = {
     var res: String = ""
-    for (y <- 0 until image.size._2)
+    for (y <- 0 until image.size._2){
       for (x <- 0 until image.size._1) {
-        val value: Char = image.getPixel(x, y).value
-        value match
-          case '\u0000' => res = res.appended(' ')
-          case other => res = res.appended(other)
-      }
-      res = res.appended('\n')
+        if (image.getPixel(x,y) != null) {
+          res = res.appended(image.getPixel(x, y).value)
+        } else {
+          res = res.appended(' ')}}
+      res = res.appended('\n')}
     res
   }
 }
