@@ -64,12 +64,14 @@ java -jar target/scala-3.4.2/ascii-cats-assembly-1.0.0.jar [options]
 
 | Option             | Parameter| Default | Description                                           |
 |--------------------|----------|---------|-------------------------------------------------------|
-| `--width`          | Int      | 120     | Width of the ASCII image                              |
-| `--brightness`     | Int      | None    | Brightness adjustment (0–255)                         |
-| `--invert`         | -        | None    | Invert colors                                         |
-| `--flip`           | String   | None    | Flip the image horizontally (`x`) or vertically (`y`) |
-| `--conversionTable`| String   | Bourke  | Choose conversion table: `Bourke` or `Long Bourke`    |
-| `--customTable`    | String   | None    | Provide a custom ASCII conversion table               |
+| `--width`           | Int      | 120     | Width of the ASCII image                              |
+| `--brightness`      | Int      | None    | Brightness adjustment (0–255)                         |
+| `--invert`          | -        | None    | Invert colors                                         |
+| `--flip`            | String   | None    | Flip the image horizontally (`x`) or vertically (`y`) |
+| `--conversion-table`| String   | Bourke  | Choose conversion table: `Bourke` or `Long Bourke`    |
+| `--custom-able`     | String   | None    | Provide a custom ASCII conversion table               |
+| `--output-console`  | -        | None    | Output the ASCII image into the console               |
+| `--output-file`     | String   | None    | Output the ASCII image into the file specified by the path parameter |
 
 ## Contributing
 
@@ -84,4 +86,5 @@ Feel free to open issues or pull requests. Contributions are welcome for:
 ## License
 
 This project is open-source. Use, modify, and distribute freely.
+
 
