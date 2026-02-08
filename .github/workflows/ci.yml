@@ -21,5 +21,11 @@ jobs:
           java-version: 21
           cache: sbt
 
+      - name: Install sbt
+        run: |
+            curl -L https://github.com/sbt/sbt/releases/download/v1.9.9/sbt-1.9.9.tgz | tar xz
+            chmod +x sbt/bin/sbt
+            echo "$PWD/sbt/bin" >> $GITHUB_PATH
+
       - name: Run tests
         run: sbt test
