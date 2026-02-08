@@ -9,12 +9,11 @@ class WidthArgumentParser extends NonEmptyArgumentParser {
   usage = "[--width <value>]\n"
 
   override def parse(arguments: List[Argument], generatorArguments: GeneratorArguments): GeneratorArguments = {
-    val tableArg: Argument = arguments.find((arg: Argument) => arg.name == "--width").getOrElse(
-      return next.parse(arguments, generatorArguments))
-
-    try generatorArguments.imageLoader = CatAPILoader(width = tableArg.getParameter.toInt)
-      catch case _ : NumberFormatException => throw InvalidParameterException("invalid width")
-
-    next.parse(arguments.filter((arg: Argument) => arg.name != "--width"), generatorArguments)
+    arguments.find((arg: Argument) => arg.name == "--width") match
+    case None => next.parse(arguments, generatorArguments)
+    case Some(argument) =>
+      try generatorArguments.imageLoader = CatAPILoader(width = argument.getParameter.toInt)
+        catch case _ : NumberFormatException => throw InvalidParameterException("invalid width")
+      next.parse(arguments.filterNot(_.name == "--width"), generatorArguments)
   }
 }

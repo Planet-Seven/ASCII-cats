@@ -9,12 +9,11 @@ class OutputFileArgumentParser extends NonEmptyArgumentParser {
   usage = "[--output-console]\n"
 
   override def parse(arguments: List[Argument], generatorArguments: GeneratorArguments): GeneratorArguments = {
-    val tableArg: Argument = arguments.find((arg: Argument) => arg.name == "--output-file").getOrElse(
-      return next.parse(arguments, generatorArguments))
-
-    try generatorArguments.exporters = generatorArguments.exporters :+ FileExporter(tableArg.getParameter)
-      catch case _: IllegalArgumentException => throw InvalidParameterException("invalid path")
-
-    next.parse(arguments.filter((arg: Argument) => arg.name != "--output-file"), generatorArguments)
+    arguments.find((arg: Argument) => arg.name == "--output-file") match
+    case None => next.parse(arguments, generatorArguments)
+    case Some(argument) =>
+      try generatorArguments.exporters = generatorArguments.exporters :+ FileExporter(argument.getParameter)
+        catch case _: IllegalArgumentException => throw InvalidParameterException("invalid path")
+      next.parse(arguments.filterNot(_.name == "--output-file"), generatorArguments)
   }
 }
