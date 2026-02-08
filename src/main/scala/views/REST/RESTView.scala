@@ -9,6 +9,12 @@ import generator.{ASCIIArtGenerator, GeneratorArguments}
 import loaders.CatAPILoader
 
 object RESTView extends MainRoutes {
+  override def port: Int =
+    sys.env.getOrElse("PORT", "8080").toInt
+
+  override def host: String =
+    "0.0.0.0"
+
   def parseArguments(width: Option[Int] = None,
                              brightness: Option[Int] = None,
                              invert: Option[Boolean] = None,
