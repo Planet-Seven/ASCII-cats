@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: ASCII Cats API
+  description: Generate ASCII art cats via HTTP.
+  version: 1.0.0
+
+servers:
+  - url: https://ascii-cats.onrender.com
+
+paths:
+  /cat:
+    get:
+      summary: Generate an ASCII cat
+      parameters:
+        - name: width
+          in: query
+          description: Output width in characters
+          schema:
+            type: integer
+            default: 120
+            minimum: 1
+
+        - name: brightness
+          in: query
+          description: Brightness adjustment
+          schema:
+            type: integer
+            minimum: -255
+            maximum: 255
+
+        - name: invert
+          in: query
+          description: Invert brightness
+          schema:
+            type: boolean
+
+        - name: flip
+          in: query
+          description: Flip axis
+          schema:
+            type: string
+            enum: [x, y]
+
+        - name: conversionTable
+          in: query
+          description: Predefined ASCII conversion table
+          schema:
+            type: string
+            enum: [Bourke, Long Bourke]
+
+        - name: customTable
+          in: query
+          description: Custom ASCII character table
+          schema:
+            type: string
+
+      responses:
+        "200":
+          description: ASCII art cat
+          content:
+            text/plain:
+              schema:
+                type: string
+
+        "400":
+          description: Invalid parameters
+          content:
+            text/plain:
+              schema:
+                type: string
