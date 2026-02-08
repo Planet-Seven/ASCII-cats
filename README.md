@@ -45,6 +45,12 @@ curl "http://localhost:8080/cat?width=150&brightness=200&invert=true&flip=x&conv
 **Error handling:**
 Invalid or conflicting parameters return a list of errors.
 
+**API Documentation**
+
+A machine-readable OpenAPI 3.0 spec for the ASCII Cats API is available in the repository:
+
+[OpenAPI Spec](./docs/openapi.yaml)
+
 ## Console Usage
 You can run the ASCII Cats generator directly from the command line by passing arguments.
 
