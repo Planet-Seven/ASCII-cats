@@ -1,39 +1,84 @@
 package views.REST
 
 import cask.*
+import conversionTables.{ArrayConversionTable, BourkeConversionTable, LongBourkeConversionTable}
 import converters.ASCIIConverterImpl
 import exporters.{StringExporter, StringExporterSubscriber}
-import filters.BrightnessFilter
+import filters.{BrightnessFilter, FlipFilter, InvertFilter}
 import generator.{ASCIIArtGenerator, GeneratorArguments}
 import loaders.CatAPILoader
 
 object RESTView extends MainRoutes {
-  @cask.get("/cat")
-  def get(width: Option[Int] = None,
-          brightness: Option[Int] = None,
-          invert: Option[Boolean] = None,
-          conversionTable: Option[String] = None,
-          customTable: Option[String] = None): String = {
-
-    val result: StringExporterSubscriber = StringExporterSubscriber()
+  def parseArguments(width: Option[Int] = None,
+                             brightness: Option[Int] = None,
+                             invert: Option[Boolean] = None,
+                             flip: Option[String] = None,
+                             conversionTable: Option[String] = None,
+                             customTable: Option[String] = None): Either[List[String], GeneratorArguments] = {
+    var errors: List[String] = List()
     val exporter: StringExporter = StringExporter()
-    exporter.subscribe(result)
 
     val generatorArguments = GeneratorArguments(
-      _imageLoader = CatAPILoader(width.getOrElse(120)),
+      _imageLoader = CatAPILoader(120),
       _filters = Seq(),
       _ascii_converter = ASCIIConverterImpl(),
       _exporters = Seq(exporter)
     )
 
-    brightness match
-      case Some(value) => generatorArguments.filters = generatorArguments.filters :+ BrightnessFilter(value/255.0)
-      case None =>
+    if conversionTable.nonEmpty && customTable.nonEmpty then
+      errors :+= "Cannot specify both conversionTable and customTable."
 
-    val generator = ASCIIArtGenerator()
-    generator.execute(generatorArguments)
+    width.foreach {
+      case 0 => errors :+= "Width cannot be zero."
+      case value => generatorArguments.imageLoader = CatAPILoader(value.abs)
+    }
+    brightness.foreach { value =>
+      if value < 0 || value > 255 then errors :+= "Brightness must be in 0–255."
+      else generatorArguments.filters :+= BrightnessFilter(value / 255.0)
+    }
+    invert.foreach {
+      case true => generatorArguments.filters :+= InvertFilter()
+      case false => // do nothing
+    }
+    flip.foreach {
+      case "x" => generatorArguments.filters :+= FlipFilter(flipX = true)
+      case "y" => generatorArguments.filters :+= FlipFilter(flipX = false)
+      case value => errors :+= s"Invalid flip axes: $value."
+    }
+    conversionTable.foreach {
+      case "Bourke" => generatorArguments.ascii_converter = ASCIIConverterImpl(conversionTable = BourkeConversionTable())
+      case "Long Bourke" => generatorArguments.ascii_converter = ASCIIConverterImpl(conversionTable = LongBourkeConversionTable())
+      case value => errors :+= s"Invalid conversion table: $value."
+    }
+    customTable.foreach {
+      case "" => errors :+= "Custom conversion table cannot be empty."
+      case value => generatorArguments.ascii_converter = ASCIIConverterImpl(conversionTable = ArrayConversionTable(value.toCharArray))
+    }
 
-    result.res
+    if errors.nonEmpty then Left(errors)
+    else Right(generatorArguments)
+  }
+
+  @cask.get("/cat")
+  def get(width: Option[Int] = None,
+          brightness: Option[Int] = None,
+          invert: Option[Boolean] = None,
+          flip: Option[String] = None,
+          conversionTable: Option[String] = None,
+          customTable: Option[String] = None): String = {
+
+    val generatorArguments = parseArguments(width, brightness, invert, flip, conversionTable, customTable)
+
+    generatorArguments.fold(
+      errors => errors.mkString("\n"),
+      arguments => {
+        val result = StringExporterSubscriber()
+        arguments.exporters.collect { case e: StringExporter => e }
+          .foreach(_.subscribe(result))
+        ASCIIArtGenerator().execute(arguments)
+        result.res
+      }
+    )
   }
   initialize()
 }
