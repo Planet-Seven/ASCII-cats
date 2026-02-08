@@ -1,6 +1,7 @@
 name := "ASCII cats"
 
 version := "1.0.0"
+assemblyJarName := "ascii-cats.jar"
 
 scalaVersion := "3.4.2"
 
