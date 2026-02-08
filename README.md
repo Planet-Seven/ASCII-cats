@@ -51,6 +51,8 @@ A machine-readable OpenAPI 3.0 spec for the ASCII Cats API is available in the r
 
 [OpenAPI Spec](./docs/openapi.yaml)
 
+The API is hosted [here.](https://ascii-cats.onrender.com/cat)
+
 ## Console Usage
 You can run the ASCII Cats generator directly from the command line by passing arguments.
 
@@ -92,5 +94,6 @@ Feel free to open issues or pull requests. Contributions are welcome for:
 ## License
 
 This project is open-source. Use, modify, and distribute freely.
+
 
 
