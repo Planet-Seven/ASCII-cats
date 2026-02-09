@@ -34,12 +34,12 @@ object RESTView extends MainRoutes {
     if conversionTable.nonEmpty && customTable.nonEmpty then
       errors :+= "Cannot specify both conversionTable and customTable."
 
-    width.foreach {
-      case 0 => errors :+= "Width cannot be zero."
-      case value => generatorArguments.imageLoader = CatAPILoader(value.abs)
+    width.foreach { value =>
+      if value <= 10 || value > 1920 then errors :+= "Width must be in [10,1920]."
+      else generatorArguments.imageLoader = CatAPILoader(value.abs)
     }
     brightness.foreach { value =>
-      if value < 0 || value > 255 then errors :+= "Brightness must be in 0–255."
+      if value < -255 || value > 255 then errors :+= "Brightness must be in [-255,255]."
       else generatorArguments.filters :+= BrightnessFilter(value / 255.0)
     }
     invert.foreach {
@@ -64,6 +64,12 @@ object RESTView extends MainRoutes {
     if errors.nonEmpty then Left(errors)
     else Right(generatorArguments)
   }
+
+  @cask.get("")
+  def root() = cask.Redirect("/ui/")
+
+  @cask.staticFiles("/ui")
+  def webui() = "src/main/resources/web-ui/index.html"
 
   @cask.get("/cat")
   def get(width: Option[Int] = None,
