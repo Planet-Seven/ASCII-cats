@@ -9,23 +9,49 @@
             padding: 20px;
             background: #f7f7f7;
             max-width: 800px;
+            margin: 0 auto;
         }
+
+        h1 {
+            margin-bottom: 16px;
+        }
+
         label {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 8px 0;
+            gap: 8px;
         }
+
+        select {
+            /* remove native styling */
+            -webkit-appearance: none;  /* Safari/Chrome */
+            -moz-appearance: none;     /* Firefox */
+            appearance: none;
+        }
+
         input[type="number"],
-        input[type="checkbox"] {
+        input[type="text"],
+        select {
             font-family: monospace;
-            padding: 4px 6px;
-            margin-left: 6px;
-            border: 1px solid #aaa;
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             background: #fff;
-            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            min-width: 80px;
+            outline: none;
+            box-sizing: border-box;
         }
-        input[type="number"] {
-            width: 120px;
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
+
         button {
             margin-top: 12px;
             padding: 6px 14px;
@@ -36,13 +62,17 @@
             background: #222;
             color: #eee;
             cursor: pointer;
+            transition: background 0.2s;
         }
+
         button:hover {
             background: #333;
         }
+
         button:active {
             background: #111;
         }
+
         #asciiCat {
             white-space: pre;
             background: #222;
@@ -52,22 +82,94 @@
             border-radius: 6px;
             overflow-x: auto;
         }
+
+        #githubLink {
+            margin-top: 20px;
+            font-size: 0.9em;
+            text-align: center;
+        }
+
+        .table-field {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .table-field input[type="text"] {
+            flex: 1;
+        }
+
+        @media (max-width: 600px) {
+            label {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            input[type="number"],
+            input[type="text"],
+            select {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .table-field {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .table-field input[type="text"] {
+                width: 100%;
+                margin-top: 4px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <h1>ASCII Cats Generator</h1>
 
-<label>Width: <input type="number" id="width" value="120" min="10" max="1920"></label><br>
-<label>Brightness: <input type="number" id="brightness" value="0" min="-255" max="255"></label><br>
-<label>Invert: <input type="checkbox" id="invert"></label><br>
+<label>Width: <input type="number" id="width" value="120" min="10" max="1920"></label>
+<label>Brightness: <input type="number" id="brightness" value="0" min="-255" max="255"></label>
+<label>Invert: <input type="checkbox" id="invert"></label>
+
+<div class="table-field">
+    <label>Table:
+        <select id="tableSelect">
+            <option value="Bourke">Bourke</option>
+            <option value="LongBourke">Long Bourke</option>
+            <option value="Custom">Custom</option>
+        </select>
+    </label>
+    <input type="text" id="customTable" placeholder="Enter custom table" style="display:none;">
+</div>
+
 <button id="generate">Generate</button>
 
 <h2>Output:</h2>
 <pre id="asciiCat">Your ASCII cat will appear here...</pre>
 
+
+<div id="githubLink">
+    <a href="https://github.com/Planet-Seven/ASCII-cats" target="_blank">View on GitHub</a>
+</div>
+
 <script>
     const apiBase = "/cat";
+
+    const tableSelect = document.getElementById("tableSelect");
+    const customTableInput = document.getElementById("customTable");
+
+    tableSelect.addEventListener("change", () => {
+        if (tableSelect.value === "Custom") {
+            customTableInput.style.display = "inline-block";
+        } else {
+            customTableInput.style.display = "none";
+        }
+    });
 
     document.getElementById("generate").addEventListener("click", async () => {
         const params = new URLSearchParams({
@@ -76,13 +178,17 @@
             invert: document.getElementById("invert").checked,
         });
 
-        if (params.flip === "")
-            params.delete("flip")
+        if (tableSelect.value === "Bourke" || tableSelect.value === "LongBourke") {
+            params.set("conversionTable", tableSelect.value);
+        } else if (tableSelect.value === "Custom" && customTableInput.value.trim() !== "") {
+            params.set("customTable", customTableInput.value);
+        }
 
         const res = await fetch(`${apiBase}?${params}`);
         const text = await res.text();
         document.getElementById("asciiCat").textContent = text;
     });
 </script>
+
 </body>
 </html>
