@@ -12,16 +12,9 @@
 
 <h1>ASCII Cats Generator</h1>
 
-<label>Width: <input type="number" id="width" value="120" min="10" max="300"></label><br>
-<label>Brightness: <input type="number" id="brightness" value="128" min="0" max="255"></label><br>
+<label>Width: <input type="number" id="width" value="120" min="10" max="1920"></label><br>
+<label>Brightness: <input type="number" id="brightness" value="0" min="-255" max="255"></label><br>
 <label>Invert: <input type="checkbox" id="invert"></label><br>
-<label>Flip:
-    <select id="flip">
-        <option value="">none</option>
-        <option value="x">x</option>
-        <option value="y">y</option>
-    </select>
-</label><br>
 <button id="generate">Generate</button>
 
 <h2>Output:</h2>
@@ -35,14 +28,15 @@
             width: document.getElementById("width").value,
             brightness: document.getElementById("brightness").value,
             invert: document.getElementById("invert").checked,
-            flip: document.getElementById("flip").value
         });
+
+        if (params.flip === "")
+            params.delete("flip")
 
         const res = await fetch(`${apiBase}?${params}`);
         const text = await res.text();
         document.getElementById("asciiCat").textContent = text;
     });
 </script>
-
 </body>
 </html>
