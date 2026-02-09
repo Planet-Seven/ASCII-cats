@@ -15,7 +15,9 @@
             margin: 8px 0;
         }
         input[type="number"],
-        input[type="checkbox"] {
+        input[type="checkbox"],
+        select,
+        input[type="text"] {
             font-family: monospace;
             padding: 4px 6px;
             margin-left: 6px;
@@ -25,6 +27,9 @@
         }
         input[type="number"] {
             width: 120px;
+        }
+        input[type="text"] {
+            width: 250px;
         }
         button {
             margin-top: 12px;
@@ -58,9 +63,30 @@
 
 <h1>ASCII Cats Generator</h1>
 
-<label>Width: <input type="number" id="width" value="120" min="10" max="1920"></label><br>
-<label>Brightness: <input type="number" id="brightness" value="0" min="-255" max="255"></label><br>
-<label>Invert: <input type="checkbox" id="invert"></label><br>
+<label>Width: <input type="number" id="width" value="120" min="10" max="1920"></label>
+<label>Brightness: <input type="number" id="brightness" value="0" min="-255" max="255"></label>
+<label>Invert: <input type="checkbox" id="invert"></label>
+
+<label>Flip:
+    <select id="flip">
+        <option value="">none</option>
+        <option value="x">x</option>
+        <option value="y">y</option>
+    </select>
+</label>
+
+<label>Conversion Table:
+    <select id="tableType">
+        <option value="Bourke">Bourke</option>
+        <option value="LongBourke">Long Bourke</option>
+        <option value="Custom">Custom</option>
+    </select>
+</label>
+
+<label id="customTableLabel" style="display:none;">
+    Custom Table: <input type="text" id="customTable" placeholder="Enter custom table" value=".:-=+*#%">
+</label>
+
 <button id="generate">Generate</button>
 
 <h2>Output:</h2>
@@ -68,21 +94,38 @@
 
 <script>
     const apiBase = "/cat";
+    const tableTypeSelect = document.getElementById("tableType");
+    const customTableLabel = document.getElementById("customTableLabel");
+
+    // Show/hide custom table input
+    tableTypeSelect.addEventListener("change", () => {
+        customTableLabel.style.display = tableTypeSelect.value === "Custom" ? "block" : "none";
+    });
 
     document.getElementById("generate").addEventListener("click", async () => {
         const params = new URLSearchParams({
             width: document.getElementById("width").value,
             brightness: document.getElementById("brightness").value,
             invert: document.getElementById("invert").checked,
+            flip: document.getElementById("flip").value
         });
 
-        if (params.flip === "")
-            params.delete("flip")
+        // Only include one of conversionTable or customTable
+        if (tableTypeSelect.value === "Custom") {
+            const customValue = document.getElementById("customTable").value.trim();
+            if (customValue !== "") params.set("customTable", customValue);
+        } else {
+            params.set("conversionTable", tableTypeSelect.value);
+        }
+
+        // Remove flip if empty
+        if (!params.get("flip")) params.delete("flip");
 
         const res = await fetch(`${apiBase}?${params}`);
         const text = await res.text();
         document.getElementById("asciiCat").textContent = text;
     });
 </script>
+
 </body>
 </html>
