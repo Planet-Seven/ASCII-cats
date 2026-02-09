@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <title>ASCII Cats UI</title>
     <style>
-        body { font-family: monospace; padding: 20px; background: #f7f7f7; }
-        #asciiCat { white-space: pre; background: #222; color: #eee; padding: 10px; }
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #f7f7f7;
+            max-width: 800px;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+        }
+        input[type="number"],
+        input[type="checkbox"] {
+            font-family: monospace;
+            padding: 4px 6px;
+            margin-left: 6px;
+            border: 1px solid #aaa;
+            background: #fff;
+            border-radius: 4px;
+        }
+        input[type="number"] {
+            width: 120px;
+        }
+        button {
+            margin-top: 12px;
+            padding: 6px 14px;
+            font-family: monospace;
+            font-size: 14px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background: #222;
+            color: #eee;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #333;
+        }
+        button:active {
+            background: #111;
+        }
+        #asciiCat {
+            white-space: pre;
+            background: #222;
+            color: #eee;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
     </style>
 </head>
 <body>
