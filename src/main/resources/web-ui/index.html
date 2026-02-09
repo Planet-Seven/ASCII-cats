@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ASCII Cats UI</title>
+    <title>ASCII Cats</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: monospace;
@@ -99,28 +100,35 @@
         .table-field input[type="text"] {
             flex: 1;
         }
-
-        @media (max-width: 600px) {
-            label {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 4px;
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+            button {
+                width: 100%;
+                padding: 10px;
+            }
+            #asciiCat {
+                font-size: 11px;
+                line-height: 1.2;
             }
 
             input[type="number"],
             input[type="text"],
             select {
+                font-size: 16px;
                 width: 100%;
                 max-width: 100%;
                 padding-left: 10px;
                 padding-right: 10px;
             }
-
             .table-field {
                 flex-direction: column;
                 align-items: stretch;
             }
-
             .table-field input[type="text"] {
                 width: 100%;
                 margin-top: 4px;
