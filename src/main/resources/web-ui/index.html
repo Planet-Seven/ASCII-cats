@@ -9,28 +9,49 @@
             padding: 20px;
             background: #f7f7f7;
             max-width: 800px;
+            margin: 0 auto;
         }
+
+        h1 {
+            margin-bottom: 16px;
+        }
+
         label {
-            display: block;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin: 8px 0;
+            gap: 8px;
         }
+
+        select {
+            /* remove native styling */
+            -webkit-appearance: none;  /* Safari/Chrome */
+            -moz-appearance: none;     /* Firefox */
+            appearance: none;
+        }
+
         input[type="number"],
-        input[type="checkbox"],
-        select,
-        input[type="text"] {
+        input[type="text"],
+        select {
             font-family: monospace;
-            padding: 4px 6px;
-            margin-left: 6px;
-            border: 1px solid #aaa;
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
             background: #fff;
-            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            min-width: 80px;
+            outline: none;
+            box-sizing: border-box;
         }
-        input[type="number"] {
-            width: 120px;
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
         }
-        input[type="text"] {
-            width: 250px;
-        }
+
         button {
             margin-top: 12px;
             padding: 6px 14px;
@@ -41,13 +62,17 @@
             background: #222;
             color: #eee;
             cursor: pointer;
+            transition: background 0.2s;
         }
+
         button:hover {
             background: #333;
         }
+
         button:active {
             background: #111;
         }
+
         #asciiCat {
             white-space: pre;
             background: #222;
@@ -56,6 +81,44 @@
             margin-top: 10px;
             border-radius: 6px;
             overflow-x: auto;
+        }
+
+        .table-field {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .table-field input[type="text"] {
+            flex: 1;
+        }
+
+        @media (max-width: 600px) {
+            label {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            input[type="number"],
+            input[type="text"],
+            select {
+                width: 100%;
+                max-width: 100%;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .table-field {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .table-field input[type="text"] {
+                width: 100%;
+                margin-top: 4px;
+            }
         }
     </style>
 </head>
@@ -67,25 +130,16 @@
 <label>Brightness: <input type="number" id="brightness" value="0" min="-255" max="255"></label>
 <label>Invert: <input type="checkbox" id="invert"></label>
 
-<label>Flip:
-    <select id="flip">
-        <option value="">none</option>
-        <option value="x">x</option>
-        <option value="y">y</option>
-    </select>
-</label>
-
-<label>Conversion Table:
-    <select id="tableType">
-        <option value="Bourke">Bourke</option>
-        <option value="LongBourke">Long Bourke</option>
-        <option value="Custom">Custom</option>
-    </select>
-</label>
-
-<label id="customTableLabel" style="display:none;">
-    Custom Table: <input type="text" id="customTable" placeholder="Enter custom table" value=".:-=+*#%">
-</label>
+<div class="table-field">
+    <label>Table:
+        <select id="tableSelect">
+            <option value="Bourke">Bourke</option>
+            <option value="LongBourke">Long Bourke</option>
+            <option value="Custom">Custom</option>
+        </select>
+    </label>
+    <input type="text" id="customTable" placeholder="Enter custom table" style="display:none;">
+</div>
 
 <button id="generate">Generate</button>
 
@@ -94,12 +148,16 @@
 
 <script>
     const apiBase = "/cat";
-    const tableTypeSelect = document.getElementById("tableType");
-    const customTableLabel = document.getElementById("customTableLabel");
 
-    // Show/hide custom table input
-    tableTypeSelect.addEventListener("change", () => {
-        customTableLabel.style.display = tableTypeSelect.value === "Custom" ? "block" : "none";
+    const tableSelect = document.getElementById("tableSelect");
+    const customTableInput = document.getElementById("customTable");
+
+    tableSelect.addEventListener("change", () => {
+        if (tableSelect.value === "Custom") {
+            customTableInput.style.display = "inline-block";
+        } else {
+            customTableInput.style.display = "none";
+        }
     });
 
     document.getElementById("generate").addEventListener("click", async () => {
@@ -107,19 +165,13 @@
             width: document.getElementById("width").value,
             brightness: document.getElementById("brightness").value,
             invert: document.getElementById("invert").checked,
-            flip: document.getElementById("flip").value
         });
 
-        // Only include one of conversionTable or customTable
-        if (tableTypeSelect.value === "Custom") {
-            const customValue = document.getElementById("customTable").value.trim();
-            if (customValue !== "") params.set("customTable", customValue);
-        } else {
-            params.set("conversionTable", tableTypeSelect.value);
+        if (tableSelect.value === "Bourke" || tableSelect.value === "LongBourke") {
+            params.set("conversionTable", tableSelect.value);
+        } else if (tableSelect.value === "Custom" && customTableInput.value.trim() !== "") {
+            params.set("customTable", customTableInput.value);
         }
-
-        // Remove flip if empty
-        if (!params.get("flip")) params.delete("flip");
 
         const res = await fetch(`${apiBase}?${params}`);
         const text = await res.text();
