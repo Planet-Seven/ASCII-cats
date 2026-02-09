@@ -53,7 +53,7 @@ object RESTView extends MainRoutes {
     }
     conversionTable.foreach {
       case "Bourke" => generatorArguments.ascii_converter = ASCIIConverterImpl(conversionTable = BourkeConversionTable())
-      case "Long Bourke" => generatorArguments.ascii_converter = ASCIIConverterImpl(conversionTable = LongBourkeConversionTable())
+      case "LongBourke" => generatorArguments.ascii_converter = ASCIIConverterImpl(conversionTable = LongBourkeConversionTable())
       case value => errors :+= s"Invalid conversion table: $value."
     }
     customTable.foreach {

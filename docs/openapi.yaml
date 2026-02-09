@@ -47,7 +47,7 @@ paths:
           description: Predefined ASCII conversion table
           schema:
             type: string
-            enum: [Bourke, Long Bourke]
+            enum: [Bourke, LongBourke]
 
         - name: customTable
           in: query
