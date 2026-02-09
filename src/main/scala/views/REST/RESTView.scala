@@ -59,6 +59,12 @@ object RESTView extends MainRoutes {
     else Right(generatorArguments)
   }
 
+  @cask.get("")
+  def root() = cask.Redirect("/ui/")
+
+  @cask.staticFiles("/ui")
+  def webui() = "src/main/resources/web-ui/index.html"
+
   @cask.get("/cat")
   def get(width: Option[Int] = None,
           brightness: Option[Int] = None,
