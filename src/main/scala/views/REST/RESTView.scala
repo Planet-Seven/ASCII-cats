@@ -66,7 +66,7 @@ object RESTView extends MainRoutes {
   }
 
   @cask.get("")
-  def root() = cask.Redirect("/ui/")
+  def root() = cask.Redirect("/ui/index.html")
 
   @cask.staticResources("/ui")
   def webui() = "web-ui"
