@@ -2,139 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ASCII Cats</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: monospace;
-            padding: 20px;
-            background: #f7f7f7;
-            max-width: 800px;
-            margin: 0 auto;
-        }
 
-        h1 {
-            margin-bottom: 16px;
-        }
-
-        label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 8px 0;
-            gap: 8px;
-        }
-
-        select {
-            /* remove native styling */
-            -webkit-appearance: none;  /* Safari/Chrome */
-            -moz-appearance: none;     /* Firefox */
-            appearance: none;
-        }
-
-        input[type="number"],
-        input[type="text"],
-        select {
-            font-family: monospace;
-            padding: 6px 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            background: #fff;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            min-width: 80px;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        button {
-            margin-top: 12px;
-            padding: 6px 14px;
-            font-family: monospace;
-            font-size: 14px;
-            border: 1px solid #444;
-            border-radius: 4px;
-            background: #222;
-            color: #eee;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background: #333;
-        }
-
-        button:active {
-            background: #111;
-        }
-
-        #asciiCat {
-            white-space: pre;
-            background: #222;
-            color: #eee;
-            padding: 12px;
-            margin-top: 10px;
-            border-radius: 6px;
-            overflow-x: auto;
-        }
-
-        #githubLink {
-            margin-top: 20px;
-            font-size: 0.9em;
-            text-align: center;
-        }
-
-        .table-field {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-        }
-
-        .table-field input[type="text"] {
-            flex: 1;
-        }
-        @media (max-width: 640px) {
-            body {
-                padding: 12px;
-            }
-            h1 {
-                font-size: 1.2em;
-            }
-            button {
-                width: 100%;
-                padding: 10px;
-            }
-            #asciiCat {
-                font-size: 11px;
-                line-height: 1.2;
-            }
-
-            input[type="number"],
-            input[type="text"],
-            select {
-                font-size: 16px;
-                width: 100%;
-                max-width: 100%;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            .table-field {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .table-field input[type="text"] {
-                width: 100%;
-                margin-top: 4px;
-            }
-        }
-    </style>
+    <title>ASCII Cat Generator – Convert Images to ASCII Cats</title>
+  
+    <meta name="description" content="Generate ASCII art cat images. Customize width, brightness, inversion, and character tables.">
+    <meta name="author" content="vojtechsvoboda.com">
+   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <link rel="canonical" href="https://www.catascii.com/">
+  
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ASCII Cat Generator">
+    <meta property="og:description" content="Generate ASCII art cat images. Customize width, brightness, inversion, and character tables.">
+    <meta property="og:url" content="https://www.catascii.com">
+    <meta property="og:image" content="https://www.catascii.com/ui/preview.png">
+  
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ASCII Cat Generator">
+    <meta name="twitter:description" content="Generate ASCII art cat images. Customize width, brightness, inversion, and character tables.">
+    <meta name="twitter:image" content="https://www.catascii.com/ui/preview.png">
+  
+    <!-- Favicons -->
+    <link rel="icon" href="/ui/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/ui/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/ui/favicon-16x16.png">
+    
+    <link rel="stylesheet" href="/ui/style.css">
 </head>
 <body>
 
@@ -165,38 +61,7 @@
     <a href="https://github.com/Planet-Seven/ASCII-cats" target="_blank">View on GitHub</a>
 </div>
 
-<script>
-    const apiBase = "/cat";
-
-    const tableSelect = document.getElementById("tableSelect");
-    const customTableInput = document.getElementById("customTable");
-
-    tableSelect.addEventListener("change", () => {
-        if (tableSelect.value === "Custom") {
-            customTableInput.style.display = "inline-block";
-        } else {
-            customTableInput.style.display = "none";
-        }
-    });
-
-    document.getElementById("generate").addEventListener("click", async () => {
-        const params = new URLSearchParams({
-            width: document.getElementById("width").value,
-            brightness: document.getElementById("brightness").value,
-            invert: document.getElementById("invert").checked,
-        });
-
-        if (tableSelect.value === "Bourke" || tableSelect.value === "LongBourke") {
-            params.set("conversionTable", tableSelect.value);
-        } else if (tableSelect.value === "Custom" && customTableInput.value.trim() !== "") {
-            params.set("customTable", customTableInput.value);
-        }
-
-        const res = await fetch(`${apiBase}?${params}`);
-        const text = await res.text();
-        document.getElementById("asciiCat").textContent = text;
-    });
-</script>
+<script src="/ui/app.js" defer></script>
 
 </body>
 </html>
