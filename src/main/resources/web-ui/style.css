@@ -90,6 +90,18 @@ button:active {
     gap: 8px;
 }
 
+#output-header {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+}
+
+#copy {
+    margin:0; 
+    padding:4px 10px; 
+    font-size:14px;
+}
+
 .table-field input[type="text"] {
     flex: 1;
 }
@@ -100,7 +112,7 @@ button:active {
     h1 {
         font-size: 1.2em;
     }
-    button {
+    #generate {
         width: 100%;
         padding: 10px;
     }

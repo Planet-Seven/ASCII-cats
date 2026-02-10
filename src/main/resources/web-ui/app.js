@@ -2,6 +2,8 @@ const apiBase = "/cat";
 
 const tableSelect = document.getElementById("tableSelect");
 const customTableInput = document.getElementById("customTable");
+const generateBtn = document.getElementById("generate");
+const asciiPre = document.getElementById("asciiCat");
 
 tableSelect.addEventListener("change", () => {
     if (tableSelect.value === "Custom") {
@@ -24,7 +26,34 @@ document.getElementById("generate").addEventListener("click", async () => {
         params.set("customTable", customTableInput.value);
     }
 
-    const res = await fetch(`${apiBase}?${params}`);
-    const text = await res.text();
-    document.getElementById("asciiCat").textContent = text;
+    generateBtn.disabled = true;
+    generateBtn.textContent = "Generating...";
+    asciiPre.textContent = "Generating your cat...";
+
+    try {
+        const res = await fetch(`${apiBase}?${params}`);
+        const text = await res.text();
+        asciiPre.textContent = text;
+    } catch (err) {
+        asciiPre.textContent = "Something went wrong.";
+        console.error(err);
+    } finally {
+        generateBtn.disabled = false;
+        generateBtn.textContent = "Generate";
+    }
+
+    //copy to clipboard button
+    copyBtn.addEventListener("click", () => {
+        const text = asciiPre.textContent;
+        if (!text || text.includes("Your ASCII cat") || text.includes("Generating")) return;
+    
+        navigator.clipboard.writeText(text).then(() => {
+            copyBtn.textContent = "Copied!";
+            setTimeout(() => copyBtn.textContent = "Copy", 1500);
+        }).catch(err => {
+            console.error("Copy failed:", err);
+            copyBtn.textContent = "Failed";
+            setTimeout(() => copyBtn.textContent = "Copy", 1500);
+        });
+    });
 });
