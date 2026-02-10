@@ -3,6 +3,7 @@ const apiBase = "/cat";
 const tableSelect = document.getElementById("tableSelect");
 const customTableInput = document.getElementById("customTable");
 const generateBtn = document.getElementById("generate");
+const copyBtn = document.getElementById("copy");
 const asciiPre = document.getElementById("asciiCat");
 
 tableSelect.addEventListener("change", () => {
